@@ -25,5 +25,5 @@
 #include <ros_gz_bridge/convert/std_msgs.hpp>
 #include <ros_gz_bridge/convert/tf2_msgs.hpp>
 #include <ros_gz_bridge/convert/trajectory_msgs.hpp>
-
+#include <ros_gz_bridge/convert/kari_msgs.hpp>
 #endif  // ROS_GZ_BRIDGE__CONVERT_HPP_

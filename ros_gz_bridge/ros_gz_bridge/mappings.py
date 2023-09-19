@@ -54,6 +54,9 @@ MAPPINGS = {
         Mapping('Odometry', 'Odometry'),
         Mapping('Odometry', 'OdometryWithCovariance'),
     ],
+    'kari_msgs': [
+        Mapping('GPSFix', 'NavSat'),
+    ],
     'rcl_interfaces': [
         Mapping('ParameterValue', 'Any'),
     ],
