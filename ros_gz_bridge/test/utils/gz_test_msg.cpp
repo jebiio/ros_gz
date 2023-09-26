@@ -1461,5 +1461,33 @@ void compareTestMsg(const std::shared_ptr<ignition::msgs::VideoRecord> & _msg)
   EXPECT_EQ(expected_msg.save_filename(), _msg->save_filename());
 }
 
+void createTestMsg(ignition::msgs::OpticalFlow & _msg)
+{
+  ignition::msgs::Header header_msg;
+
+  createTestMsg(header_msg);
+
+  _msg.mutable_header()->CopyFrom(header_msg);
+  _msg.set_distance(0.1);
+  _msg.set_integrated_x(0.2);
+  _msg.set_integrated_y(0.3);
+  // _msg.set_velocity_x(0.4);
+  // _msg.set_velocity_y(0.5);
+  _msg.set_quality(6);
+}
+
+void compareTestMsg(const std::shared_ptr<ignition::msgs::OpticalFlow> & _msg)
+{
+  ignition::msgs::OpticalFlow expected_msg;
+  createTestMsg(expected_msg);
+
+  compareTestMsg(std::make_shared<ignition::msgs::Header>(_msg->header()));
+
+  EXPECT_FLOAT_EQ(expected_msg.distance(), _msg->distance());
+  EXPECT_FLOAT_EQ(expected_msg.integrated_x(), _msg->integrated_x());
+  EXPECT_FLOAT_EQ(expected_msg.integrated_y(), _msg->integrated_y());
+  EXPECT_EQ(expected_msg.quality(), _msg->quality());
+}
+
 }  // namespace testing
 }  // namespace ros_gz_bridge

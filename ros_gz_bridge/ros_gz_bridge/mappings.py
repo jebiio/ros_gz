@@ -101,6 +101,9 @@ MAPPINGS = {
     'trajectory_msgs': [
         Mapping('JointTrajectory', 'JointTrajectory'),
     ],
+    'kari_interfaces': [
+        Mapping('OpticalFlow', 'OpticalFlow'),
+    ],
 }
 
 MAPPINGS_8_4_0 = {

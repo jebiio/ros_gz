@@ -1344,5 +1344,34 @@ void compareTestMsg(const std::shared_ptr<rcl_interfaces::msg::ParameterValue> &
   EXPECT_EQ(expected_msg.string_value, _msg->string_value);
 }
 
+void createTestMsg(kari_interfaces::msg::OpticalFlow & _msg)
+{
+  std_msgs::msg::Header header_msg;
+  createTestMsg(header_msg);
+
+  _msg.header = header_msg;
+  _msg.ground_distance = 0.1;
+  _msg.flow_x = 0.2;
+  _msg.flow_y = 0.3;
+  // _msg.velocity_x = 0.4;
+  // _msg.velocity_y = 0.5;
+  _msg.quality = 6;
+}
+
+void compareTestMsg(const std::shared_ptr<kari_interfaces::msg::OpticalFlow> & _msg)
+{
+  kari_interfaces::msg::OpticalFlow expected_msg;
+  createTestMsg(expected_msg);
+
+  compareTestMsg(_msg->header);
+  EXPECT_FLOAT_EQ(expected_msg.ground_distance, _msg->ground_distance);
+  EXPECT_FLOAT_EQ(expected_msg.flow_x, _msg->flow_x);
+  EXPECT_FLOAT_EQ(expected_msg.flow_y, _msg->flow_y);
+  // EXPECT_FLOAT_EQ(expected_msg.velocity_x, _msg->velocity_x);
+  // EXPECT_FLOAT_EQ(expected_msg.velocity_y, _msg->velocity_y);
+  EXPECT_EQ(expected_msg.quality, _msg->quality);
+}
+
+
 }  // namespace testing
 }  // namespace ros_gz_bridge

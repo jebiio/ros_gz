@@ -34,7 +34,7 @@ if("$ENV{GZ_VERSION}" STREQUAL "edifice")
 # Garden
 elseif("$ENV{GZ_VERSION}" STREQUAL "garden")
   find_package(gz-transport12 REQUIRED)
-  find_package(gz-msgs9 REQUIRED)
+  find_package(gz-msgs9 REQUIRED PATHS /usr/local/lib/cmake/)
 
   set(GZ_TARGET_PREFIX gz)
   set(GZ_MSGS_VER ${gz-msgs9_VERSION_MAJOR})
@@ -70,6 +70,7 @@ set(BRIDGE_MESSAGE_TYPES
   std_msgs
   tf2_msgs
   trajectory_msgs
+  kari_interfaces
 )
 
 set(generated_path "${CMAKE_BINARY_DIR}/generated")
@@ -244,6 +245,7 @@ if(BUILD_TESTING)
     ros_gz_interfaces
     rosgraph_msgs
     sensor_msgs
+    kari_interfaces
     std_msgs
     tf2_msgs
     trajectory_msgs

@@ -64,6 +64,7 @@
 #include <ignition/msgs/vector3d.pb.h>
 #include <ignition/msgs/video_record.pb.h>
 #include <ignition/msgs/wrench.pb.h>
+#include <ignition/msgs/optical_flow.pb.h>
 
 #include <memory>
 
@@ -493,6 +494,15 @@ void createTestMsg(ignition::msgs::VideoRecord & _msg);
 /// \brief Compare a message with the populated for testing.
 /// \param[in] _msg The message to compare.
 void compareTestMsg(const std::shared_ptr<ignition::msgs::VideoRecord> & _msg);
+
+/// \brief Create a message used for testing.
+/// \param[out] _msg The message populated.
+void createTestMsg(ignition::msgs::OpticalFlow & _msg);
+
+/// \brief Compare a message with the populated for testing.
+/// \param[in] _msg The message to compare.
+void compareTestMsg(const std::shared_ptr<ignition::msgs::OpticalFlow> & _msg);
+
 
 }  // namespace testing
 }  // namespace ros_gz_bridge
