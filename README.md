@@ -2,43 +2,29 @@
 
 ROS 2 version | Gazebo version | Branch | Binaries hosted at
 -- | -- | -- | --
-Foxy | Citadel | [foxy](https://github.com/gazebosim/ros_gz/tree/foxy) | https://packages.ros.org
-Foxy | Edifice | [foxy](https://github.com/gazebosim/ros_gz/tree/foxy) | only from source
-Galactic | Edifice | [galactic](https://github.com/gazebosim/ros_gz/tree/galactic) | https://packages.ros.org
-Galactic | Fortress | [galactic](https://github.com/gazebosim/ros_gz/tree/galactic) | only from source
 Humble | Fortress | [humble](https://github.com/gazebosim/ros_gz/tree/humble) | https://packages.ros.org
 Humble | Garden | [humble](https://github.com/gazebosim/ros_gz/tree/humble) | only from source
-Rolling | Edifice | [ros2](https://github.com/gazebosim/ros_gz/tree/ros2) | only from source
-Rolling | Fortress | [ros2](https://github.com/gazebosim/ros_gz/tree/ros2) | https://packages.ros.org
-Rolling | Garden | [ros2](https://github.com/gazebosim/ros_gz/tree/ros2) | only from source
+Iron | Fortress | [iron](https://github.com/gazebosim/ros_gz/tree/iron) | https://packages.ros.org
+Iron | Garden | [iron](https://github.com/gazebosim/ros_gz/tree/iron) | only from source
 
-For information on ROS 2 and Gazebo compatibility, refer to the [melodic branch README](https://github.com/gazebosim/ros_gz/tree/melodic)
 
-> Please [ticket an issue](https://github.com/gazebosim/ros_gz/issues/) if you'd like support to be added for some combination.
 
-[Details about the renaming process](README_RENAME.md) from `ign` to `gz` .
-
-**Note**: The `ros_ign` prefixed packages are shim packages that redirect to their `ros_gz` counterpart.
-Under most circumstances you want to be using the `ros_gz` counterpart.
-
-# Integration between ROS and Gazebo
+# ROS와 Gazebo 연동
 
 ## Packages
 
-This repository holds packages that provide integration between
-[ROS](http://www.ros.org/) and [Gazebo](https://gazebosim.org):
+이 repo에는 ROS와 Gazebo 연동을 위한 아래와 같이 패키지들로 구성:
 
 * [ros_gz](https://github.com/gazebosim/ros_gz/tree/ros2/ros_gz):
-  Metapackage which provides all the other packages.
+  다른 package에 대한 정보만 제공하는 Metapackage
 * [ros_gz_image](https://github.com/gazebosim/ros_gz/tree/ros2/ros_gz_image):
   Unidirectional transport bridge for images from
   [Gazebo Transport](https://gazebosim.org/libs/transport)
   to ROS using
   [image_transport](http://wiki.ros.org/image_transport).
 * [ros_gz_bridge](https://github.com/gazebosim/ros_gz/tree/ros2/ros_gz_bridge):
-  Bidirectional transport bridge between
   [Gazebo Transport](https://gazebosim.org/libs/transport)
-  and ROS.
+  와 ROS 양방향 전송을 위한 bridge.
 * [ros_gz_sim](https://github.com/gazebosim/ros_gz/tree/ros2/ros_gz_sim):
   Convenient launch files and executables for using
   [Gazebo Sim](https://gazebosim.org/libs/gazebo)
@@ -49,14 +35,9 @@ This repository holds packages that provide integration between
   Plugins for publishing point clouds to ROS from
   [Gazebo Sim](https://gazebosim.org/libs/gazebo) simulations.
 
-## Install
+## 설치
 
-This branch supports ROS Humble. See above for other ROS versions.
-
-### Binaries
-
-Humble binaries are available for Fortress.
-They are hosted at https://packages.ros.org.
+### 바이너리 설치
 
 1. Add https://packages.ros.org
 
@@ -68,30 +49,26 @@ They are hosted at https://packages.ros.org.
 
         sudo apt install ros-humble-ros-gz
 
-### From source
+### 소스 설치
 
 #### ROS
 
-Be sure you've installed
-[ROS Humble](https://docs.ros.org/en/humble/Installation.html)
-(at least ROS-Base). More ROS dependencies will be installed below.
+[ROS Humble](https://index.ros.org/doc/ros2/Installation/) 설치
 
 #### Gazebo
 
-Install either [Edifice, Fortress, or Garden](https://gazebosim.org/docs).
+[Garden](https://gazebosim.org/docs) 설치
 
-Set the `GZ_VERSION` environment variable to the Gazebo version you'd
-like to compile against. For example:
+`GZ_VERSION` 환경 변수 설정 :
 
-    export GZ_VERSION=edifice # IMPORTANT: Replace with correct version
+    export GZ_VERSION=garden
 
-> You only need to set this variable when compiling, not when running.
+> 컴파일 할때 이 변수가 설정되어 있으면 됨!
 
-#### Compile ros_gz
+#### ros_gz 컴파일하기
 
-The following steps are for Linux and OSX.
 
-1. Create a colcon workspace:
+1. colcon workspace 생성:
 
     ```
     # Setup the workspace
@@ -99,19 +76,19 @@ The following steps are for Linux and OSX.
     cd ~/ws/src
 
     # Download needed software
-    git clone https://github.com/gazebosim/ros_gz.git -b humble
+    git clone https://github.com/gazebosim/ros_gz.git -b ros2
     ```
 
-1. Install dependencies (this may also install Gazebo):
+1. 의존성 설치:
 
     ```
     cd ~/ws
     rosdep install -r --from-paths src -i -y --rosdistro humble
     ```
 
-    > If `rosdep` fails to install Gazebo libraries and you have not installed them before, please follow [Gazebo installation instructions](https://gazebosim.org/docs/latest/install).
+    > 만약 `rosdep`로 Gazebo libraries 설치가 실패하면, [Gazebo installation instructions](https://gazebosim.org/docs/latest/install) 지시대로 따라하기.
 
-1. Build the workspace:
+1. workspace 빌드하기:
 
     ```
     # Source ROS distro's setup.bash
@@ -122,21 +99,15 @@ The following steps are for Linux and OSX.
     colcon build
     ```
 
-    If `colcon build` fails with [this issue](https://github.com/gazebosim/ros_gz/issues/401)
-
-    ```
-    CMake Error at CMakeLists.txt:81 (find_package):
-      By not providing "Findactuator_msgs.cmake" in CMAKE_MODULE_PATH this
-      project has asked CMake to find a package configuration file provided by
-      "actuator_msgs", but CMake did not find one.
-    ```
-
-    ```bash
-    cd src
-    git clone git@github.com:rudislabs/actuator_msgs.git
-    cd ../
-    colcon build
-    ```
+## 빌드 중 error 해결하기
+* rosidl_pycommon module not found 에러 발생
+```bash
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws/src
+git clone https://github.com/ros2/rosidl.git
+cd rosidl/rosidl_pycommon
+sudo python3 setup.py install
+```
 
 ## ROSCon 2022
 
